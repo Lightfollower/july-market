@@ -37,6 +37,6 @@ public class ProductsService {
         if (page < 1L) {
             page = 1;
         }
-        return productsRepository.findAll(spec, PageRequest.of(page - 1, 10));
+        return productsRepository.findAll(spec, PageRequest.of(page - 1, 3));
     }
 }

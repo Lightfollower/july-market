@@ -60,17 +60,20 @@
 
     <nav aria-label="Page navigation">
         <ul class="pagination">
-            <li class="page-item" th:classappend="${products.getNumber() == 0 ? 'disabled' : 'active'}">
+            <li class="page-item" th:classappend="${products.getNumber() == 0 ? 'disabled' : ''}">
                 <a class="page-link"
                    th:href="@{'/products/?p='+ ${products.previousOrFirstPageable().getPageNumber() + 1} + ${filterDef}}">Назад</a>
             </li>
-
+            <li class="page-item" th:classappend="${products.getNumber() + 1 == 1 ? 'active' : ''}">
+                <a class="page-link" th:text="1" th:href="@{'/products/?p=' + 1 + ${filterDef}}"></a>
+            </li>
             <li class="page-item" th:classappend="${products.getNumber() + 1 == i ? 'active' : ''}"
-                th:each="i : ${#numbers.sequence(1, products.getTotalPages())}">
+                th:each="i : ${#numbers.sequence((products.getNumber() + 1 > 2 ? products.getNumber() : 2), (products.getNumber() + 3 < products.getTotalPages() ? products.getNumber() + 3 : products.getTotalPages()))}">
                 <a class="page-link" th:text="${i}" th:href="@{'/products/?p=' + ${i} + ${filterDef}}"></a>
             </li>
 
-            <li class="page-item" th:classappend="${products.getNumber() == products.getTotalPages()-1 ? 'disabled' : 'active'}">
+            <li class="page-item"
+                th:classappend="${products.getNumber() == products.getTotalPages()-1 ? 'disabled' : ''}">
                 <a class="page-link"
                    th:href="@{'/products/?p='+ ${products.nextOrLastPageable().getPageNumber() + 1} + ${filterDef}}">Вперед</a>
             </li>
