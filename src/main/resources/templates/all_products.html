@@ -68,10 +68,12 @@
                 <a class="page-link" th:text="1" th:href="@{'/products/?p=' + 1 + ${filterDef}}"></a>
             </li>
             <li class="page-item" th:classappend="${products.getNumber() + 1 == i ? 'active' : ''}"
-                th:each="i : ${#numbers.sequence((products.getNumber() + 1 > 2 ? products.getNumber() : 2), (products.getNumber() + 3 < products.getTotalPages() ? products.getNumber() + 3 : products.getTotalPages()))}">
+                th:each="i : ${#numbers.sequence((products.getNumber() + 1 > 2 ? products.getNumber() : 2), (products.getNumber() + 3 < products.getTotalPages() ? products.getNumber() + 3 : products.getTotalPages() - 1))}">
                 <a class="page-link" th:text="${i}" th:href="@{'/products/?p=' + ${i} + ${filterDef}}"></a>
             </li>
-
+            <li class="page-item" th:classappend="${products.getNumber() + 1 == products.getTotalPages() ? 'active' : ''}">
+                <a class="page-link" th:text="${products.getTotalPages()}" th:href="@{'/products/?p=' + ${products.getTotalPages()} + ${filterDef}}"></a>
+            </li>
             <li class="page-item"
                 th:classappend="${products.isLast() ? 'disabled' : ''}">
                 <a class="page-link"
