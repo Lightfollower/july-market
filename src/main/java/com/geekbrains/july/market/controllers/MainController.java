@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
     @GetMapping("/")
     public String homePage() {
-        System.out.println("ololo");
         return "redirect:/products";
     }
 }

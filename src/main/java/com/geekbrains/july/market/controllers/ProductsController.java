@@ -2,13 +2,12 @@ package com.geekbrains.july.market.controllers;
 
 import com.geekbrains.july.market.entities.Category;
 import com.geekbrains.july.market.entities.Product;
-import com.geekbrains.july.market.repositories.specifications.ProductSpecifications;
+import com.geekbrains.july.market.services.CartService;
 import com.geekbrains.july.market.services.CategoriesService;
 import com.geekbrains.july.market.services.ProductsService;
 import com.geekbrains.july.market.utils.ProductFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +20,13 @@ import java.util.Map;
 public class ProductsController {
     private ProductsService productsService;
     private CategoriesService categoriesService;
+    private CartService cartService;
 
     @Autowired
-    public ProductsController(ProductsService productsService, CategoriesService categoriesService) {
+    public ProductsController(ProductsService productsService, CategoriesService categoriesService, CartService cartService) {
         this.productsService = productsService;
         this.categoriesService = categoriesService;
+        this.cartService = cartService;
     }
 
     @GetMapping
@@ -62,6 +63,13 @@ public class ProductsController {
     @PostMapping("/edit")
     public String modifyProduct(@ModelAttribute Product product) {
         productsService.saveOrUpdate(product);
+        return "redirect:/products/";
+    }
+
+    @GetMapping("/buy/{id}")
+    public String buyProduct(@PathVariable Long id) {
+        System.out.println("ololo");
+        cartService.addProductToCart(productsService.findById(id));
         return "redirect:/products/";
     }
 }
