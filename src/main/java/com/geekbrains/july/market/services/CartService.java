@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CartService {
@@ -16,7 +17,7 @@ public class CartService {
         this.cartRepository = cartRepository;
     }
 
-    public List<Product> getCart() {
+    public Map<Product, Integer> getCart() {
         return cartRepository.getCart();
     }
 

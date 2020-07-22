@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/cart")
@@ -22,7 +23,7 @@ public class CartController {
 
     @GetMapping
     public String cart(Model model) {
-        List<Product> products = cartService.getCart();
+        Map<Product, Integer> products = cartService.getCart();
         model.addAttribute("products", products);
         return "cart";
     }

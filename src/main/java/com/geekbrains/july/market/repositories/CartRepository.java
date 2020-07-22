@@ -4,24 +4,33 @@ import com.geekbrains.july.market.entities.Product;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class CartRepository {
-    List<Product> cart;
+    Map<Product, Integer> cart;
 
     public CartRepository() {
-        cart = new ArrayList<>();
+        cart = new HashMap<>();
 //        cart.add(new Product(1L, "Ololo", 500));
 //        cart.add(new Product(2L, "DOlolo", 600));
     }
 
-    public List<Product> getCart() {
+    public Map<Product, Integer> getCart() {
         return cart;
     }
 
     public Product addProductToCart(Product product) {
-        cart.add(product);
+        for (Product p :
+                cart.keySet()) {
+            if (p.getId() == product.getId()) {
+                cart.replace(p, cart.get(p)+1);
+                return product;
+            }
+        }
+        cart.put(product, 1);
         return product;
     }
 }

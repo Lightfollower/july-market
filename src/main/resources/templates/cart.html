@@ -21,13 +21,15 @@
         <tr>
             <td>Название</td>
             <td>Цена</td>
+            <td>Количество</td>
         </tr>
         </thead>
         <tbody>
 
         <tr th:each="p : ${products}">
-            <td th:text="${p.title}"></td>
-            <td th:text="${p.price}"></td>
+            <td th:text="${p.getKey().title}"></td>
+            <td th:text="${p.getKey().price}"></td>
+            <td th:text="${p.getValue()}"></td>
         </tr>
         </tbody>
     </table>

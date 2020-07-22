@@ -67,7 +67,7 @@ public class ProductsController {
     }
 
     @PostMapping("/buy/{id}")
-    public String buyProduct(@PathVariable Long id, @RequestParam Integer vol) {
+    public String buyProduct(@PathVariable Long id, @RequestParam(defaultValue = "1") Integer vol) {
         System.out.println(id + " " + vol);
         for (int i = 0; i < vol; i++) {
             cartService.addProductToCart(productsService.findById(id));
