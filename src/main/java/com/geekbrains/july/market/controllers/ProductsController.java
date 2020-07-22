@@ -66,10 +66,12 @@ public class ProductsController {
         return "redirect:/products/";
     }
 
-    @GetMapping("/buy/{id}")
-    public String buyProduct(@PathVariable Long id) {
-        System.out.println("ololo");
-        cartService.addProductToCart(productsService.findById(id));
+    @PostMapping("/buy/{id}")
+    public String buyProduct(@PathVariable Long id, @RequestParam Integer vol) {
+        System.out.println(id + " " + vol);
+        for (int i = 0; i < vol; i++) {
+            cartService.addProductToCart(productsService.findById(id));
+        }
         return "redirect:/products/";
     }
 }
