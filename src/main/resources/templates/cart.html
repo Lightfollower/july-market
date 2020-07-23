@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>July Market</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+</head>
+
+
+<body>
+<div class="container">
+    <div th:replace="~{navigation :: navigation(Cart)}"/>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <td>Название</td>
+            <td>Цена</td>
+            <td>Количество</td>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="p : ${products}">
+            <td th:text="${p.getKey().title}"></td>
+            <td th:text="${p.getKey().price}"></td>
+            <td th:text="${p.getValue()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
