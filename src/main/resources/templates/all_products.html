@@ -34,6 +34,14 @@
             <input type="text" th:value="${param.title != null ? param.title : ''}" class="form-control"
                    name="title">
         </div>
+        <div class="form-group">
+            <label>Категории</label>
+            <div class="form-check" th:each="c : ${@categoriesService.getAllCategories()}">
+                <input type="checkbox" class="form-check-input" name="categories" th:value="${c.id}">
+                <label class="form-check-label" th:text="${c.title}"></label>
+                <span th:text="${param.categories}"/>
+            </div>
+        </div>
         <button type="submit" class="btn btn-primary">Применить</button>
         <a class="btn btn-primary" th:href="@{'/products/?p=0'}">Сброс</a>
     </form>
@@ -75,7 +83,7 @@
                 <a class="page-link" th:text="${products.getTotalPages()}" th:href="@{'/products/?p=' + ${products.getTotalPages()} + ${filterDef}}"></a>
             </li>
             <li class="page-item"
-                th:classappend="${products.isLast() ? 'disabled' : ''}">
+                th:classappend="${products.isLast() ? 'inac' : ''}">
                 <a class="page-link"
                    th:href="@{'/products/?p='+ ${products.nextOrLastPageable().getPageNumber() + 1} + ${filterDef}}">Вперед</a>
             </li>
