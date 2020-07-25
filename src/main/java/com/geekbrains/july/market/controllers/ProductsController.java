@@ -42,7 +42,6 @@ public class ProductsController {
         Page<Product> products = productsService.findAll(productFilter.getSpec(), pageNumber);
         model.addAttribute("products", products);
         model.addAttribute("filterDef", productFilter.getFilterDefinition().toString());
-        System.out.println(productFilter.getFilterDefinition());
         return "all_products";
     }
 

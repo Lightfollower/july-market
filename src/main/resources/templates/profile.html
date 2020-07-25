@@ -18,11 +18,11 @@
     <h2 th:text="#{nav.profile}"></h2>
     <h4 th:text="'Имя: ' + ${user.firstName} + ' ' + ${user.lastName}"></h4>
     <div>
-        <span th:text="'EMail: ' + ${user.email}"></span>
+        <span th:text="'E-Mail: ' + ${user.email}"></span>
         <form th:action="@{/profile/change_email}" th:object="${user}" method="POST">
             <input hidden th:field="*{id}"/>
             <input th:field="*{email}"/>
-            <input type="submit"/>
+            <input type="submit" value="Изменить"/>
         </form>
     </div>
     <div>
