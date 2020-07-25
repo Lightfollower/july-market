@@ -15,11 +15,14 @@
 <div class="container">
     <div th:replace="~{navigation :: navigation(Market)}"/>
 
-    <h2>July Market</h2>
-    <h4>Морда юзверя</h4>
-
-
-
+    <h2 th:text="#{nav.profile}"></h2>
+    <h4 th:text="'Имя: ' + ${user.firstName} + ' ' + ${user.lastName}"></h4>
+    <div>
+        <span th:text="'EMail: ' + ${user.email}"></span>
+    </div>
+    <div>
+    <span th:text="'Phone number: ' + ${user.phone}"></span>
+    </div>
 </div>
 </body>
 </html>

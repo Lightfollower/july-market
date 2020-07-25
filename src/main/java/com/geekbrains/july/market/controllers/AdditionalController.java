@@ -19,9 +19,4 @@ public class AdditionalController {
     public String loginPage() {
         return "login_page";
     }
-
-    @GetMapping("/profile")
-    public String profile() {
-        return "profile";
-    }
 }

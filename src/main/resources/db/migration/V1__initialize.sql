@@ -74,7 +74,7 @@ values
 
 insert into users (phone, password, first_name, last_name, email)
 values
-('11111111','$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i','admin','admin','admin@gmail.com');
+('11111111','$2a$04$Fx/SX9.BAvtPlMyIIqqFx.hLY2Xp8nnhpzvEEVINvVpwIPbA3v/.i','Админ','Админов','admin@gmail.com');
 
 insert into users_roles (user_id, role_id)
 values
