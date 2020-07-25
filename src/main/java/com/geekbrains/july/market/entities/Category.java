@@ -38,7 +38,6 @@ public class Category {
     }
 
     public String getTitle(){
-        System.out.println(title);
         return title;
     }
 }

@@ -9,4 +9,19 @@ public class AdditionalController {
     public String aboutPage() {
         return "about";
     }
+
+    @GetMapping("/")
+    public String homepage() {
+        return "index";
+    }
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "login_page";
+    }
+
+    @GetMapping("/profile")
+    public String profile() {
+        return "profile";
+    }
 }

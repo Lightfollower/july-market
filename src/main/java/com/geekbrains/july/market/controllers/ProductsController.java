@@ -70,8 +70,9 @@ public class ProductsController {
     }
 
     @PostMapping("/buy/{id}")
-    public String buyProduct(Model model, @PathVariable Long id, @RequestParam Map<String, String> requestParams, @RequestParam(defaultValue = "1") Integer vol,
-    @RequestParam(name = "categories", required = false) List<Long> categoriesIds) {
+    public String buyProduct(Model model, @PathVariable Long id, @RequestParam Map<String, String> requestParams,
+                             @RequestParam(defaultValue = "1") Integer vol,
+                             @RequestParam(name = "categories", required = false) List<Long> categoriesIds) {
         for (int i = 0; i < vol; i++) {
             cartService.addProductToCart(productsService.findById(id));
         }
