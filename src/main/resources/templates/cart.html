@@ -27,9 +27,9 @@
         <tbody>
 
         <tr th:each="p : ${products}">
-            <td th:text="${p.getKey().title}"></td>
-            <td th:text="${p.getKey().price}"></td>
-            <td th:text="${p.getValue()}"></td>
+            <td th:text="${p.getProduct().getTitle()}"></td>
+            <td th:text="${p.getPrice()}"></td>
+            <td th:text="${p.getQuantity()}"></td>
         </tr>
         </tbody>
     </table>
