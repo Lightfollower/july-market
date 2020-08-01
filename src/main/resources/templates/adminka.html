@@ -20,7 +20,9 @@
         <tr th:each="u : ${users}">
             <td th:text="${u.id}"></td>
             <td th:text="${u.lastName}"></td>
-            <a href="@{'/delete/' +${p.id}}">Delete</a>
+            <form th:action="@{'/delete/' +${u.id}}" method="get">
+                <button type="submit">Del</button>
+            </form>
         </tr>
         </tbody>
     </table>
