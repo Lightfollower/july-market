@@ -15,21 +15,12 @@
 <body>
 <div class="container">
     <div th:replace="~{navigation :: navigation(Cart)}"/>
-
     <table class="table table-striped">
-        <thead>
-        <tr>
-            <td>Название</td>
-            <td>Цена</td>
-            <td>Количество</td>
-        </tr>
-        </thead>
         <tbody>
-
-        <tr th:each="p : ${products}">
-            <td th:text="${p.getProduct().getTitle()}"></td>
-            <td th:text="${p.getPrice()}"></td>
-            <td th:text="${p.getQuantity()}"></td>
+        <tr th:each="u : ${users}">
+            <td th:text="${u.id}"></td>
+            <td th:text="${u.lastName}"></td>
+            <a th:href="@{'/delete/' +${u.id}}" >Del</a>
         </tr>
         </tbody>
     </table>

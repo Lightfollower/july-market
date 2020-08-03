@@ -1,15 +1,13 @@
 package com.geekbrains.july.market.controllers;
 
+import com.geekbrains.july.market.beans.Cart;
 import com.geekbrains.july.market.entities.Category;
 import com.geekbrains.july.market.entities.Product;
-import com.geekbrains.july.market.services.CartService;
 import com.geekbrains.july.market.services.CategoriesService;
 import com.geekbrains.july.market.services.ProductsService;
 import com.geekbrains.july.market.utils.ProductFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +20,13 @@ import java.util.Map;
 public class ProductsController {
     private ProductsService productsService;
     private CategoriesService categoriesService;
-    private CartService cartService;
+    private Cart cart;
 
     @Autowired
-    public ProductsController(ProductsService productsService, CategoriesService categoriesService, CartService cartService) {
+    public ProductsController(ProductsService productsService, CategoriesService categoriesService, Cart cart) {
         this.productsService = productsService;
         this.categoriesService = categoriesService;
-        this.cartService = cartService;
+        this.cart = cart;
     }
 
     @GetMapping
@@ -42,7 +40,6 @@ public class ProductsController {
         Page<Product> products = productsService.findAll(productFilter.getSpec(), pageNumber);
         model.addAttribute("products", products);
         model.addAttribute("filterDef", productFilter.getFilterDefinition().toString());
-        System.out.println(productFilter.getFilterDefinition());
         return "all_products";
     }
 
@@ -70,11 +67,10 @@ public class ProductsController {
     }
 
     @PostMapping("/buy/{id}")
-    public String buyProduct(Model model, @PathVariable Long id, @RequestParam Map<String, String> requestParams, @RequestParam(defaultValue = "1") Integer vol,
-    @RequestParam(name = "categories", required = false) List<Long> categoriesIds) {
-        for (int i = 0; i < vol; i++) {
-            cartService.addProductToCart(productsService.findById(id));
-        }
+    public String buyProduct(Model model, @PathVariable Long id, @RequestParam Map<String, String> requestParams,
+                             @RequestParam(defaultValue = "1") Integer quantity,
+                             @RequestParam(name = "categories", required = false) List<Long> categoriesIds) {
+            cart.addProductToCart(productsService.findById(id), quantity);
         return showAll(model, requestParams, categoriesIds);
     }
 }

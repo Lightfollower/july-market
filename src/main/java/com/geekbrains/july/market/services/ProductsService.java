@@ -1,6 +1,7 @@
 package com.geekbrains.july.market.services;
 
 import com.geekbrains.july.market.entities.Product;
+import com.geekbrains.july.market.entities.dtos.ProductDto;
 import com.geekbrains.july.market.exceptions.ProductNotFoundException;
 import com.geekbrains.july.market.repositories.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,4 +40,21 @@ public class ProductsService {
         }
         return productsRepository.findAll(spec, PageRequest.of(page - 1, 5));
     }
+
+    public void deleteById(Long id) {
+        productsRepository.deleteById(id);
+    }
+
+    public void deleteAll() {
+        productsRepository.deleteAll();
+    }
+
+    public boolean existsById(Long id) {
+        return productsRepository.existsById(id);
+    }
+
+    public List<ProductDto> getDtoData() {
+        return productsRepository.findAllBy();
+    }
+
 }
