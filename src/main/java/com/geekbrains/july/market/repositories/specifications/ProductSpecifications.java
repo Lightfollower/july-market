@@ -17,7 +17,7 @@ public class ProductSpecifications {
 
     public static Specification<Product> titleContainsFollowingExpression(String title) {
         return (root, criteriaQuery, criteriaBuilder) ->
-                criteriaBuilder.like(root.get("title"), "%" + title + "%");
+                criteriaBuilder.like(root.get("title"), String.format("%%%s%%", title));
     }
 
     public static Specification<Product> categoryIs(Category category){

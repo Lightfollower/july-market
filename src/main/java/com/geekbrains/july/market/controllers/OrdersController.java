@@ -4,7 +4,7 @@ import com.geekbrains.july.market.beans.Cart;
 import com.geekbrains.july.market.entities.Order;
 import com.geekbrains.july.market.entities.User;
 import com.geekbrains.july.market.services.OrdersService;
-import com.geekbrains.july.market.services.UsersService;
+import com.geekbrains.july.market.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +16,7 @@ import java.security.Principal;
 @RequestMapping("/orders")
 @AllArgsConstructor
 public class OrdersController {
-    private UsersService usersService;
+    private UserService usersService;
     private OrdersService ordersService;
     private Cart cart;
 

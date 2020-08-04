@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.annotation.PostConstruct;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
 @Data
 public class Cart {
     private List<OrderItem> items;
-    private int price;
+    private BigDecimal price;
 
     @PostConstruct
     public void init() {
@@ -29,23 +30,16 @@ public class Cart {
         recalculate();
     }
 
-    private void recalculate() {
-        for (OrderItem i :
-                items) {
-            price += i.getPrice();
-        }
-    }
-
     public void add(Product product) {
-        for (OrderItem i :
-                items) {
+        for (OrderItem i : items) {
             if (i.getProduct().getId().equals(product.getId())) {
-                i.setQuantity(i.getQuantity() + 1);
-                i.setPrice((i.getProduct().getPrice() * i.getQuantity()));
+                i.increment();
                 recalculate();
                 return;
             }
         }
+        items.add(new OrderItem(product));
+        recalculate();
     }
 
     public void removeByProductId(int productId) {
@@ -58,19 +52,37 @@ public class Cart {
         }
     }
 
-    public void addProductToCart(Product product, int quantity) {
-        for (OrderItem item :
-                items) {
-            if (product.getId() == (item.getProduct().getId())) {
-                item.setQuantity(item.getQuantity() + quantity);
-                item.setPrice(product.getPrice() * item.getQuantity());
+    public List<OrderItem> getCart() {
+        return items;
+    }
+
+    public void decrement(Product product) {
+        for (OrderItem i : items) {
+            if (i.getProduct().getId().equals(product.getId())) {
+                i.decrement();
+                if (i.isEmpty()) {
+                    items.remove(i);
+                }
+                recalculate();
                 return;
             }
         }
-        items.add(new OrderItem(product, quantity, product.getPrice() * quantity));
     }
 
-    public List<OrderItem> getCart() {
-        return items;
+    public void removeByProductId(Long productId) {
+        for (int i = 0; i < items.size(); i++) {
+            if (items.get(i).getProduct().getId().equals(productId)) {
+                items.remove(i);
+                recalculate();
+                return;
+            }
+        }
+    }
+
+    public void recalculate() {
+        price = new BigDecimal(0.0);
+        for (OrderItem i : items) {
+            price = price.add(i.getPrice());
+        }
     }
 }

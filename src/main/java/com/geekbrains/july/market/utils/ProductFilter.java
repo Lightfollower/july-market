@@ -34,8 +34,7 @@ public class ProductFilter {
         }
         if (categories != null && !categories.isEmpty()) {
             Specification specCategories = null;
-            for (Category c :
-                    categories) {
+            for (Category c : categories) {
                 if (specCategories == null) {
                     specCategories = ProductSpecifications.categoryIs(c);
                 } else {
