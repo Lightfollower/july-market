@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org">
+<html ng-app="demoApp" ng-controller="demoCtrl" xmlns:th="http://www.thymeleaf.org">
 
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>July Market</title>
 
@@ -48,25 +48,39 @@
     </form>
 
     <h4>Список товаров:</h4>
-    <table class="table table-striped">
-        <thead>
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
         <tr>
-            <td>Id</td>
-            <td>Название</td>
-            <td>Цена</td>
-            <td>Операции</td>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Price</th>
         </tr>
-        </thead>
-        <tbody>
-
-        <tr th:each="p : ${products.getContent()}">
-            <td th:text="${p.id}"></td>
-            <td th:text="${p.title}"></td>
-            <td th:text="${p.price}"></td>
-            <td><a class="btn btn-primary" th:href="@{'/cart/add/' + ${p.id}}">Добавить в корзину</a></td>
+        <tbody ng-repeat="p in Products">
+        <tr>
+            <td>{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.price}}</td>
         </tr>
         </tbody>
     </table>
+<!--    <table class="table table-striped">-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <td>Id</td>-->
+<!--            <td>Название</td>-->
+<!--            <td>Цена</td>-->
+<!--            <td>Операции</td>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+
+<!--        <tr th:each="p : ${products.getContent()}">-->
+<!--            <td th:text="${p.id}"></td>-->
+<!--            <td th:text="${p.title}"></td>-->
+<!--            <td th:text="${p.price}"></td>-->
+<!--            <td><a class="btn btn-primary" th:href="@{'/cart/add/' + ${p.id}}">Добавить в корзину</a></td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
 
     <nav aria-label="Page navigation">
         <ul class="pagination">
@@ -88,4 +102,17 @@
     </nav>
 </div>
 </body>
+
+<script>
+    var app = angular.module('demoApp', []);
+    app.controller('demoCtrl', function ($scope, $http) {
+        fillTable = function () {
+            $http.get("http://localhost:8189/market/api/v1/products")
+                .then(function (response) {
+                    $scope.Products = response.data;
+                });
+        };
+        fillTable();
+    });
+</script>
 </html>
