@@ -59,8 +59,10 @@
             <td>{{p.id}}</td>
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
+<!--            <td><button onclick="addProductToCart(p.title)">Add</button></td>-->
         </tr>
         </tbody>
+
     </table>
 <!--    <table class="table table-striped">-->
 <!--        <thead>-->
@@ -113,6 +115,23 @@
                 });
         };
         fillTable();
+    });
+</script>
+<!--<script>-->
+<!--    app.controller('demoCtrl', function ($scope, $http) {-->
+
+<!--        ololo = function () {-->
+<!--        $http.get("http://localhost:8189/market/ol")-->
+<!--    }    });-->
+
+<!--</script>-->
+<script>
+    var app = angular.module('demoApp', []);
+    app.controller('demoCtrl', function ($scope, $http) {
+        addProductToCart = function (s) {
+            $http.post("http://localhost:8189/market/ol" + s)
+        }
+
     });
 </script>
 </html>
