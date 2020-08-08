@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="demoApp" ng-controller="demoCtrl" xmlns:th="http://www.thymeleaf.org">
+<html ng-app="myREST" ng-controller="myRESTCtrl" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
@@ -54,12 +54,12 @@
             <th>Title</th>
             <th>Price</th>
         </tr>
-        <tbody ng-repeat="p in Products">
-        <tr>
-            <td>{{p.id}}</td>
+        <tbody >
+        <tr ng-repeat="p in Products">
+            <td >{{p.id}}</td>
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
-<!--            <td><button onclick="addProductToCart(p.title)">Add</button></td>-->
+            <td><button class="btn btn-primary" ng-click="addProductToCart(p.id)">Добавить в корзину</button></td>
         </tr>
         </tbody>
 
@@ -106,8 +106,8 @@
 </body>
 
 <script>
-    var app = angular.module('demoApp', []);
-    app.controller('demoCtrl', function ($scope, $http) {
+    var app = angular.module('myREST', []);
+    app.controller('myRESTCtrl', function ($scope, $http) {
         fillTable = function () {
             $http.get("http://localhost:8189/market/api/v1/products")
                 .then(function (response) {
@@ -115,6 +115,9 @@
                 });
         };
         fillTable();
+        $scope.addProductToCart = function (productId) {
+            $http.post("http://localhost:8189/market/api/v1/cart/" + productId)
+        };
     });
 </script>
 <!--<script>-->
@@ -125,13 +128,12 @@
 <!--    }    });-->
 
 <!--</script>-->
-<script>
-    var app = angular.module('demoApp', []);
-    app.controller('demoCtrl', function ($scope, $http) {
-        addProductToCart = function (s) {
-            $http.post("http://localhost:8189/market/ol" + s)
-        }
-
-    });
-</script>
+<!--<script>-->
+<!--    var app = angular.module('demoApp', []);-->
+<!--    app.controller('demoCtrl', function ($scope, $http) {-->
+<!--        addProductToCart = function () {-->
+<!--            $http.post("http://localhost:8189/market/ol")-->
+<!--        };-->
+<!--    });-->
+<!--// </script>-->
 </html>
