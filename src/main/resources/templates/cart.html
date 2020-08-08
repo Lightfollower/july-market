@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org">
+<html ng-app="myREST" ng-controller="myRESTCtrl" xmlns:th="http://www.thymeleaf.org">
 
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>July Market</title>
 
@@ -29,19 +29,41 @@
         </thead>
         <tbody>
 
-        <tr th:each="i : ${@cart.getItems()}">
-            <td th:text="${i.product.title}"></td>
+        <tr ng-repeat="item in OrderItems">
+            <td>{{item.product.title}}</td>
             <td>
-                <a class="btn btn-primary" th:href="@{'/cart/decrement/' + ${i.product.id}}">-</a>
-                <span th:text="'  ' + ${i.quantity} + '  '"/>
-                <a class="btn btn-primary" th:href="@{'/cart/add/' + ${i.product.id}}">+</a>
+<!--                <a class="btn btn-primary" th:href="@{'/cart/decrement/' + ${i.product.id}}">-</a>-->
+                <span >{{item.quantity}}</span>
+<!--                <a class="btn btn-primary" th:href="@{'/cart/add/' + ${i.product.id}}">+</a>-->
             </td>
-            <td th:text="${i.price}"></td>
-            <td><a class="btn btn-danger" th:href="@{'/cart/remove/' + ${i.product.id}}">Удалить</a></td>
+            <td>{{item.price}}</td>
+            <td><button class="btn btn-danger" ng-click="removeItemFromCart(item.id)">Удалить</button></td>
         </tr>
         </tbody>
     </table>
     <a class="btn btn-primary" th:href="@{'/orders/create'}" th:if="${@cart.items.size() > 0}">Оформить заказ</a>
 </div>
 </body>
+<script>
+    var app = angular.module('myREST', []);
+    app.controller('myRESTCtrl', function ($scope, $http) {
+        fillTable = function () {
+            $http.get("http://localhost:8189/market/api/v1/cart")
+                .then(function (response) {
+                    $scope.OrderItems = response.data;
+                });
+        };
+        fillTable();
+
+        $scope.removeItemFromCart = function (itemId) {
+            $http.delete("http://localhost:8189/market/api/v1/cart/" + itemId)
+                .then(function (response) {
+                    $scope.OrderItems = response.data;
+                });
+        }
+        // $scope.addProductToCart = function (productId) {
+        //     $http.post("http://localhost:8189/market/api/v1/cart/" + productId)
+        // };
+    });
+</script>
 </html>
