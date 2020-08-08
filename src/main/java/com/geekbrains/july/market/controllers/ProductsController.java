@@ -1,6 +1,5 @@
 package com.geekbrains.july.market.controllers;
 
-import com.geekbrains.july.market.beans.Cart;
 import com.geekbrains.july.market.entities.Category;
 import com.geekbrains.july.market.entities.Product;
 import com.geekbrains.july.market.services.CategoriesService;

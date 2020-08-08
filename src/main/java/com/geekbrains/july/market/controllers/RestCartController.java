@@ -2,7 +2,6 @@ package com.geekbrains.july.market.controllers;
 
 
 import com.geekbrains.july.market.beans.Cart;
-import com.geekbrains.july.market.entities.Order;
 import com.geekbrains.july.market.entities.OrderItem;
 import com.geekbrains.july.market.entities.Product;
 import com.geekbrains.july.market.exceptions.ProductNotFoundException;
@@ -31,20 +30,6 @@ public class RestCartController {
         return cart.getCart();
     }
 
-//    @GetMapping(value = "/{id}", produces = "application/json")
-//    @ApiOperation("Returns one product by id")
-//    public ResponseEntity<?> getOneProduct(@PathVariable @ApiParam("Id of the product to be requested. Cannot be empty") Long id) {
-//        if (!productsService.existsById(id)) {
-//            throw new ProductNotFoundException("Product not found, id: " + id);
-//        }
-//        return new ResponseEntity<>(productsService.findById(id), HttpStatus.OK);
-//    }
-
-//    @DeleteMapping
-//    @ApiOperation("Removes all products")
-//    public void deleteAllProducts() {
-//        productsService.deleteAll();
-//    }
 
     @DeleteMapping("/{id}")
     @ApiOperation("Removes one item by id")
@@ -56,20 +41,9 @@ public class RestCartController {
     @PostMapping()
     @ApiOperation("Put one product to cart")
     public List<OrderItem> addProductToCartById(@RequestBody Product product) {
-//        Product product = productsService.findById(productId);
         cart.add(product);
         return cart.getItems();
     }
-
-//    @PostMapping(consumes = "application/json", produces = "application/json")
-//    @ResponseStatus(HttpStatus.CREATED)
-//    @ApiOperation("Creates a new product")
-//    public Product saveNewProduct(@RequestBody Product product) {
-//        if (product.getId() != null) {
-//            product.setId(null);
-//        }
-//        return productsService.saveOrUpdate(product);
-//    }
 
     @PutMapping(consumes = "application/json", produces = "application/json")
     @ApiOperation("Modifies an quantity")

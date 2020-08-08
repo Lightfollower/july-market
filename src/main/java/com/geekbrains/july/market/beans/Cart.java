@@ -3,6 +3,7 @@ package com.geekbrains.july.market.beans;
 import com.geekbrains.july.market.entities.OrderItem;
 import com.geekbrains.july.market.entities.Product;
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @Component
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
-@Data
+@Getter
 public class Cart {
     private List<OrderItem> items;
     private BigDecimal price;
@@ -44,16 +45,6 @@ public class Cart {
         orderItem.setId(itemId++);
         System.out.println(orderItem);
         recalculate();
-    }
-
-    public void removeByProductId(int productId) {
-        for (int i = 0; i < items.size(); i++) {
-            if (items.get(i).getProduct().getId().equals(productId)) {
-                items.remove(i);
-                recalculate();
-                return;
-            }
-        }
     }
 
     public List<OrderItem> getCart() {
