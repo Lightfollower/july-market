@@ -2,6 +2,7 @@ package com.geekbrains.july.market.controllers;
 
 
 import com.geekbrains.july.market.beans.Cart;
+import com.geekbrains.july.market.entities.Order;
 import com.geekbrains.july.market.entities.OrderItem;
 import com.geekbrains.july.market.entities.Product;
 import com.geekbrains.july.market.exceptions.ProductNotFoundException;
@@ -69,17 +70,12 @@ public class RestCartController {
 //        return productsService.saveOrUpdate(product);
 //    }
 
-//    @PutMapping(consumes = "application/json", produces = "application/json")
-//    @ApiOperation("Modifies an existing product")
-//    public ResponseEntity<?> modifyProduct(@RequestBody Product product) {
-//        if (product.getId() == null || !productsService.existsById(product.getId())) {
-//            throw new ProductNotFoundException("Product not found, id: " + product.getId());
-//        }
-//        if (product.getPrice().doubleValue() < 0.0) {
-//            return new ResponseEntity<>("Product's price can not be negative", HttpStatus.BAD_REQUEST);
-//        }
-//        return new ResponseEntity<>(productsService.saveOrUpdate(product), HttpStatus.OK);
-//    }
+    @PutMapping(consumes = "application/json", produces = "application/json")
+    @ApiOperation("Modifies an quantity")
+    public List<OrderItem> modifyQuantity(@RequestBody Product product) {
+        cart.decrement(product);
+        return cart.getItems();
+    }
 
     @ExceptionHandler
     public ResponseEntity<?> handleException(ProductNotFoundException exc) {

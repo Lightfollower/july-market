@@ -60,6 +60,7 @@ public class Cart {
         return items;
     }
 
+
     public void decrement(Product product) {
         for (OrderItem i : items) {
             if (i.getProduct().getId().equals(product.getId())) {
