@@ -53,11 +53,12 @@ public class RestCartController {
         return cart.getCart();
     }
 
-    @PostMapping("/{productId}")
-    public void addProductToCartById(@PathVariable Long productId/*, HttpServletRequest request, HttpServletResponse response*/) {
-        Product product = productsService.findById(productId);
+    @PostMapping()
+    @ApiOperation("Put one product to cart")
+    public List<OrderItem> addProductToCartById(@RequestBody Product product) {
+//        Product product = productsService.findById(productId);
         cart.add(product);
-//        response.sendRedirect(request.getHeader("referer"));
+        return cart.getItems();
     }
 
 //    @PostMapping(consumes = "application/json", produces = "application/json")

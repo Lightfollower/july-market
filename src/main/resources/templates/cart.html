@@ -34,10 +34,10 @@
             <td>
                 <button class="btn btn-primary" ng-click="decrement(item.product)">-</button>
                 <span >{{item.quantity}}</span>
-<!--                <a class="btn btn-primary" th:href="@{'/cart/add/' + ${i.product.id}}">+</a>-->
+                <button class="btn btn-primary" ng-click="increment(item.product)">+</button>
             </td>
             <td>{{item.price}}</td>
-            <td><button class="btn btn-danger" ng-click="removeItemFromCart(item.id)">Удалить</button></td>
+            <td><button class="btn btn-danger" ng-click="removeItemFromCart(item.product.id)">Удалить</button></td>
         </tr>
         </tbody>
     </table>
@@ -55,8 +55,8 @@
         };
         fillTable();
 
-        $scope.removeItemFromCart = function (itemId) {
-            $http.delete("http://localhost:8189/market/api/v1/cart/" + itemId)
+        $scope.removeItemFromCart = function (productId) {
+            $http.delete("http://localhost:8189/market/api/v1/cart/" + productId)
                 .then(function (response) {
                     $scope.OrderItems = response.data;
                 });
@@ -64,6 +64,13 @@
 
         $scope.decrement = function (product) {
             $http.put("http://localhost:8189/market/api/v1/cart/" , product)
+                .then(function (response) {
+                    $scope.OrderItems = response.data;
+                });
+        }
+
+        $scope.increment = function (product) {
+            $http.post("http://localhost:8189/market/api/v1/cart/" , product)
                 .then(function (response) {
                     $scope.OrderItems = response.data;
                 });

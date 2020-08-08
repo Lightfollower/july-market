@@ -59,7 +59,7 @@
             <td >{{p.id}}</td>
             <td>{{p.title}}</td>
             <td>{{p.price}}</td>
-            <td><button class="btn btn-primary" ng-click="addProductToCart(p.id)">Добавить в корзину</button></td>
+            <td><button class="btn btn-primary" ng-click="addProductToCart(p)">Добавить в корзину</button></td>
         </tr>
         </tbody>
 
@@ -115,8 +115,8 @@
                 });
         };
         fillTable();
-        $scope.addProductToCart = function (productId) {
-            $http.post("http://localhost:8189/market/api/v1/cart/" + productId)
+        $scope.addProductToCart = function (product) {
+            $http.post("http://localhost:8189/market/api/v1/cart/", product)
         };
     });
 </script>
