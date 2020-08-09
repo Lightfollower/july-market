@@ -47,11 +47,6 @@ public class Cart {
         recalculate();
     }
 
-    public List<OrderItem> getCart() {
-        return items;
-    }
-
-
     public void decrement(Product product) {
         for (OrderItem i : items) {
             if (i.getProduct().getId().equals(product.getId())) {

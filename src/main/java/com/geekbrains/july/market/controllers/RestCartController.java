@@ -27,7 +27,7 @@ public class RestCartController {
     @GetMapping(produces = "application/json")
     @ApiOperation("Returns list of items in the cart")
     public List<OrderItem> getCart() {
-        return cart.getCart();
+        return cart.getItems();
     }
 
 
@@ -35,7 +35,7 @@ public class RestCartController {
     @ApiOperation("Removes one item by id")
     public List<OrderItem> deleteOneProducts(@PathVariable Long id) {
         cart.removeByProductId(id);
-        return cart.getCart();
+        return cart.getItems();
     }
 
     @PostMapping()
