@@ -28,6 +28,7 @@ public class RestProductsController {
     private ProductsService productsService;
     private CategoriesService categoriesService;
 
+
     @GetMapping("/dto")
     @ApiOperation("Returns list of all products data transfer objects")
     public List<ProductDto> getAllProductsDto() {
@@ -53,9 +54,9 @@ public class RestProductsController {
     @GetMapping(value = "/{id}", produces = "application/json")
     @ApiOperation("Returns one product by id")
     public ResponseEntity<?> getOneProduct(@PathVariable @ApiParam("Id of the product to be requested. Cannot be empty") Long id) {
-        if (!productsService.existsById(id)) {
-            throw new ProductNotFoundException("Product not found, id: " + id);
-        }
+//        if (!productsService.existsById(id)) {
+//            throw new ProductNotFoundException("Product not found, id: " + id);
+//        }
         return new ResponseEntity<>(productsService.findById(id), HttpStatus.OK);
     }
 
@@ -67,8 +68,10 @@ public class RestProductsController {
 
     @DeleteMapping("/{id}")
     @ApiOperation("Removes one product by id")
-    public void deleteOneProducts(@PathVariable Long id) {
+    public String deleteOneProduct(@PathVariable Long id) {
+        String product = productsService.findById(id).toString();
         productsService.deleteById(id);
+        return product;
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
@@ -93,8 +96,8 @@ public class RestProductsController {
         return new ResponseEntity<>(productsService.saveOrUpdate(product), HttpStatus.OK);
     }
 
-    @ExceptionHandler
-    public ResponseEntity<?> handleException(ProductNotFoundException exc) {
-        return new ResponseEntity<>(exc.getMessage(), HttpStatus.NOT_FOUND);
-    }
+//    @ExceptionHandler
+//    public ResponseEntity<?> handleException(ProductNotFoundException exc) {
+//        return new ResponseEntity<>(exc.getMessage(), HttpStatus.NOT_FOUND);
+//    }
 }
