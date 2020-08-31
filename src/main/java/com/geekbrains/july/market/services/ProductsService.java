@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -64,5 +65,20 @@ public class ProductsService {
         productSOAP.setTitle(product.getTitle());
         productSOAP.setPrice(product.getPrice());
         return productSOAP;
+    }
+
+    public List<ProductSOAP> findAllSOAP() {
+        List<Product> products = productsRepository.findAll();
+        List<ProductSOAP> productSOAPS = new ArrayList<>();
+        ProductSOAP productSOAP;
+        for (Product p:
+             products) {
+            productSOAP = new ProductSOAP();
+            productSOAP.setId(p.getId());
+            productSOAP.setTitle(p.getTitle());
+            productSOAP.setPrice(p.getPrice());
+            productSOAPS.add(productSOAP);
+        }
+        return productSOAPS;
     }
 }
