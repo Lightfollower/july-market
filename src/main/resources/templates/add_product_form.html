@@ -47,7 +47,7 @@
     app.controller('myRESTCtrl', function ($scope, $http) {
         fillTable = function () {
             window.btoa("11111111:100");
-            $http.get("http://localhost:8189/market/api/v1/products")
+            $http.get("http://localhost:8189/market/api/v1/products/dto")
                 .then(function (response) {
                     $scope.Products = response.data;
                 });
