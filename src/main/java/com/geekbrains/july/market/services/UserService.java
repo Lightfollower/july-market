@@ -2,6 +2,7 @@ package com.geekbrains.july.market.services;
 
 import com.geekbrains.july.market.entities.Role;
 import com.geekbrains.july.market.entities.User;
+import com.geekbrains.july.market.entities.dtos.SystemUser;
 import com.geekbrains.july.market.repositories.RoleRepository;
 import com.geekbrains.july.market.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,11 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +24,13 @@ import java.util.stream.Collectors;
 @Service
 public class UserService implements UserDetailsService {
     private UserRepository userRepository;
-    private RoleRepository roleRepository;
+    private RoleService roleService;
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder){
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
@@ -29,8 +38,8 @@ public class UserService implements UserDetailsService {
     }
 
     @Autowired
-    public void setRoleRepository(RoleRepository roleRepository) {
-        this.roleRepository = roleRepository;
+    public void setRolesService(RoleService roleService) {
+        this.roleService = roleService;
     }
 
     public Optional<User> findByPhone(String phone) {
@@ -45,12 +54,28 @@ public class UserService implements UserDetailsService {
                 mapRolesToAuthorities(user.getRoles()));
     }
 
+    @Transactional
     public User saveOrUpdate(User user) {
         User temp = userRepository.findById(user.getId()).get();
         user.setPhone(temp.getPhone());
         user.setPassword(temp.getPassword());
         user.setFirstName(temp.getFirstName());
         user.setLastName(temp.getLastName());
+        return userRepository.save(user);
+    }
+
+    @Transactional
+    public User save(SystemUser systemUser) {
+        User user = new User();
+        findByPhone(systemUser.getPhone()).ifPresent((u) -> {
+            throw new RuntimeException("User with phone " + systemUser.getPhone() + " is already exist");
+        });
+        user.setPhone(systemUser.getPhone());
+        user.setPassword(passwordEncoder.encode(systemUser.getPassword()));
+        user.setFirstName(systemUser.getFirstName());
+        user.setLastName(systemUser.getLastName());
+        user.setEmail(systemUser.getEmail());
+        user.setRoles(Arrays.asList(roleService.findByName("ROLE_CUSTOMER")));
         return userRepository.save(user);
     }
 
