@@ -8,6 +8,8 @@
 
 package com.geekbrains.july.market.products;
 
+import com.geekbrains.july.market.entities.Product;
+
 import javax.xml.bind.annotation.XmlRegistry;
 
 
@@ -29,35 +31,19 @@ import javax.xml.bind.annotation.XmlRegistry;
 public class ObjectFactory {
 
 
-    /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.geekbrains.spring.ws.countries
-     * 
-     */
     public ObjectFactory() {
     }
 
-    /**
-     * Create an instance of {@link GetProductRequest }
-     * 
-     */
     public GetProductRequest createGetCountryRequest() {
         return new GetProductRequest();
     }
 
-    /**
-     * Create an instance of {@link GetProductResponse }
-     * 
-     */
     public GetProductResponse createGetCountryResponse() {
         return new GetProductResponse();
     }
 
-    /**
-     * Create an instance of {@link Country }
-     * 
-     */
-    public Country createProduct() {
-        return new Country();
+    public Product createProduct() {
+        return new Product();
     }
 
 }

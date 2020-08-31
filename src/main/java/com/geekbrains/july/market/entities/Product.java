@@ -4,6 +4,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -11,12 +15,19 @@ import java.util.List;
 @Table(name = "products")
 @Data
 @NoArgsConstructor
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "product", propOrder = {
+        "id",
+        "title",
+        "price",
+})
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
+    @XmlElement(required = true)
     @Column(name = "title")
     private String title;
 

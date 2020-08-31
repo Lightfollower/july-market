@@ -7,7 +7,6 @@
 
 
 package com.geekbrains.july.market.products;
-
 import javax.xml.bind.annotation.*;
 
 
@@ -38,29 +37,14 @@ import javax.xml.bind.annotation.*;
 public class GetProductResponse {
 
     @XmlElement(required = true)
-    protected Country product;
+    protected ProductSOAP product;
 
-    /**
-     * Gets the value of the country property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Country }
-     *     
-     */
-    public Country getProduct() {
+
+    public ProductSOAP getProduct() {
         return product;
     }
 
-    /**
-     * Sets the value of the country property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Country }
-     *     
-     */
-    public void setProduct(Country value) {
+    public void setProduct(ProductSOAP value) {
         this.product = value;
     }
 

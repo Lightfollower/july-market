@@ -3,6 +3,7 @@ package com.geekbrains.july.market.services;
 import com.geekbrains.july.market.entities.Product;
 import com.geekbrains.july.market.entities.dtos.ProductDto;
 import com.geekbrains.july.market.exceptions.ProductNotFoundException;
+import com.geekbrains.july.market.products.ProductSOAP;
 import com.geekbrains.july.market.repositories.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -54,5 +55,14 @@ public class ProductsService {
 
     public List<ProductDto> getDtoData() {
         return productsRepository.findAllBy();
+    }
+
+    public ProductSOAP findOneProductSOAPByTitle(String title) {
+        Product product = productsRepository.findByTitle(title);
+        ProductSOAP productSOAP = new ProductSOAP();
+        productSOAP.setId(product.getId());
+        productSOAP.setTitle(product.getTitle());
+        productSOAP.setPrice(product.getPrice());
+        return productSOAP;
     }
 }
