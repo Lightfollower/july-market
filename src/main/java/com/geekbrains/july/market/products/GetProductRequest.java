@@ -13,29 +13,9 @@ import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "title"
 })
 @XmlRootElement(name = "getProductRequest")
 public class GetProductRequest {
 
-    @XmlElement(required = true)
-    protected String title;
-
-    /**
-     * Gets the value of the name property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getTitle() {
-        return title;
-    }
-
-
-    public void setTitle(String value) {
-        this.title = value;
-    }
 
 }
