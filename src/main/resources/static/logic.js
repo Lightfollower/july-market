@@ -70,7 +70,7 @@ app.controller('addOrEditProductController', function ($scope, $http, $routePara
                 window.location.reload(true);
             });
         } else {
-            $http.put(contextPath + '/ololo', $scope.productFromForm).then(function (response) {
+            $http.put(contextPath + '/api/v1/products', $scope.productFromForm).then(function (response) {
                 console.log(response);
                 window.location.href = contextPath + '/index.html#/shop';
                 window.location.reload(true);
