@@ -55,7 +55,17 @@ public class ProductsService {
     }
 
     public List<ProductDto> getDtoData() {
-        return productsRepository.findAllBy();
+        List<Product> products = productsRepository.findAll();
+        List<ProductDto> productDtos = new ArrayList<>();
+        for (Product p :
+                products) {
+            ProductDto productDto = new ProductDto();
+            productDto.setId(p.getId());
+            productDto.setTitle(p.getTitle());
+            productDto.setPrice(p.getPrice());
+            productDtos.add(productDto);
+        }
+        return productDtos;
     }
 
     public ProductSOAP findOneProductSOAPByTitle(String title) {
@@ -71,8 +81,8 @@ public class ProductsService {
         List<Product> products = productsRepository.findAll();
         List<ProductSOAP> productSOAPS = new ArrayList<>();
         ProductSOAP productSOAP;
-        for (Product p:
-             products) {
+        for (Product p :
+                products) {
             productSOAP = new ProductSOAP();
             productSOAP.setId(p.getId());
             productSOAP.setTitle(p.getTitle());

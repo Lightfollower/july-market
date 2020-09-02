@@ -7,6 +7,8 @@
 
 
 package com.geekbrains.july.market.products;
+import com.geekbrains.july.market.entities.dtos.ProductDto;
+
 import javax.xml.bind.annotation.*;
 import java.util.List;
 
@@ -38,14 +40,14 @@ import java.util.List;
 public class GetProductResponse {
 
     @XmlElement(required = true)
-    protected List<ProductSOAP> product;
+    protected List<ProductDto> product;
 
 
-    public List<ProductSOAP> getProduct() {
+    public List<ProductDto> getProduct() {
         return product;
     }
 
-    public void setProduct(List<ProductSOAP> value) {
+    public void setProduct(List<ProductDto> value) {
         this.product = value;
     }
 

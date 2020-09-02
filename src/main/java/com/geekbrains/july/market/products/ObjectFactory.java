@@ -34,11 +34,11 @@ public class ObjectFactory {
     public ObjectFactory() {
     }
 
-    public GetProductRequest createGetCountryRequest() {
+    public GetProductRequest createGetProductRequest() {
         return new GetProductRequest();
     }
 
-    public GetProductResponse createGetCountryResponse() {
+    public GetProductResponse createGetProductResponse() {
         return new GetProductResponse();
     }
 

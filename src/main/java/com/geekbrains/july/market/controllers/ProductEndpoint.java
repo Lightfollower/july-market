@@ -28,9 +28,8 @@ public class ProductEndpoint {
     @ResponsePayload
     public GetProductResponse getProduct(@RequestPayload GetProductRequest request) {
         GetProductResponse response = new GetProductResponse();
-        System.out.println(response);
         List<ProductSOAP> products = new ArrayList<>();
-        response.setProduct(productsService.findAllSOAP());
+        response.setProduct(productsService.getDtoData());
         return response;
     }
 }
