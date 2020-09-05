@@ -6,12 +6,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class JulyMarketApplication {
 	// Домашнее задание:
-	// 1. Добавьте страницу профиля пользователя с отображением информации о нем (ФИО, email, телефон)
-	// 2. * Доделайте корзины на основе сессионных бинов
-	// 3. * Дать админам возможность блокировать пользователей
+	// 1. Реализуйте ввод логина/пароля через форму AngularJS и
+	// запоминание этой пары, чтобы AngularJS с каждый запросом их отправлял
+	// для прохождения basic authentication. Реализовать log out.
+	// 2. * Попробуйте перенести фильтры на AngularJS
 
 	public static void main(String[] args) {
 		SpringApplication.run(JulyMarketApplication.class, args);
-
 	}
 }

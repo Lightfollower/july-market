@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html ng-app="myREST" ng-controller="myRESTCtrl" xmlns:th="http://www.thymeleaf.org">
 
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>July Market</title>
 
@@ -20,19 +21,21 @@
 
     <form th:accept="@{'/products'}" method="get">
         <div class="form-group">
-            <label>Минимальная цена</label>
-            <input type="number" th:value="${param.min_price != null ? param.min_price : ''}" class="form-control"
-                   name="min_price">
-        </div>
-        <div class="form-group">
-            <label>Максимальная цена</label>
-            <input type="number" th:value="${param.max_price != null ? param.max_price : ''}" class="form-control"
-                   name="max_price">
-        </div>
-        <div class="form-group">
-            <label>Название содержит:</label>
-            <input type="text" th:value="${param.title != null ? param.title : ''}" class="form-control"
+            <label>Название</label>
+            <input th:value="${param.title != null ? param.title : ''}" class="form-control form-control-sm"
                    name="title">
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>Минимальная цена</label>
+                <input type="number" th:value="${param.min_price != null ? param.min_price : ''}"
+                       class="form-control form-control-sm" name="min_price">
+            </div>
+            <div class="form-group col-md-6">
+                <label>Максимальная цена</label>
+                <input type="number" th:value="${param.max_price != null ? param.max_price : ''}"
+                       class="form-control form-control-sm" name="max_price">
+            </div>
         </div>
         <div class="form-group">
             <label>Категории</label>
@@ -42,36 +45,45 @@
             </div>
         </div>
         <button type="submit" class="btn btn-primary">Применить</button>
-        <a class="btn btn-primary" th:href="@{'/products/?p=0'}">Сброс</a>
+        <a th:href="@{/products}" type="button" class="btn btn-warning">Сброс фильтра</a>
     </form>
-    <h4>Список товаров:</h4>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <td>Id</td>
-            <td>Название</td>
-            <td>Цена</td>
-            <td>Операции</td>
-        </tr>
-        </thead>
-        <tbody>
 
-        <tr th:each="p : ${products.getContent()}">
-            <td th:text="${p.id}"></td>
-            <td th:text="${p.title}"></td>
-            <td th:text="${p.price}"></td>
-            <td><a sec:authorize="hasRole('ADMIN')" th:href="@{'/products/edit/' + ${p.id}}">Редактировать</a></td>
-            <td>
-                <form th:action="@{'/products/buy/' +${p.id} + '?p=' +  ${products.previousOrFirstPageable().getPageNumber() +1} +  ${filterDef}} "
-                      method="post">
-                    <input type="number" class="form-control"
-                           name="quantity">
-                    <button type="submit">Купить</button>
-                </form>
-            </td>
+    <h4>Список товаров:</h4>
+    <table class="table table-hover" cellpadding="0" cellspacing="0">
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th>Price</th>
+        </tr>
+        <tbody >
+        <tr ng-repeat="p in Products">
+            <td >{{p.id}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.price}}</td>
+            <td><button class="btn btn-primary" ng-click="addProductToCart(p)">Добавить в корзину</button></td>
         </tr>
         </tbody>
+
     </table>
+<!--    <table class="table table-striped">-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <td>Id</td>-->
+<!--            <td>Название</td>-->
+<!--            <td>Цена</td>-->
+<!--            <td>Операции</td>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+
+<!--        <tr th:each="p : ${products.getContent()}">-->
+<!--            <td th:text="${p.id}"></td>-->
+<!--            <td th:text="${p.title}"></td>-->
+<!--            <td th:text="${p.price}"></td>-->
+<!--            <td><a class="btn btn-primary" th:href="@{'/cart/add/' + ${p.id}}">Добавить в корзину</a></td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
 
     <nav aria-label="Page navigation">
         <ul class="pagination">
@@ -79,20 +91,13 @@
                 <a class="page-link"
                    th:href="@{'/products/?p='+ ${products.previousOrFirstPageable().getPageNumber() + 1} + ${filterDef}}">Назад</a>
             </li>
-            <li class="page-item" th:classappend="${products.getNumber() + 1 == 1 ? 'active' : ''}">
-                <a class="page-link" th:text="1" th:href="@{'/products/?p=' + 1 + ${filterDef}}"></a>
-            </li>
+
             <li class="page-item" th:classappend="${products.getNumber() + 1 == i ? 'active' : ''}"
-                th:each="i : ${#numbers.sequence((products.getNumber() + 1 > 2 ? products.getNumber() : 2), (products.getNumber() + 3 < products.getTotalPages() ? products.getNumber() + 3 : products.getTotalPages() - 1))}">
+                th:each="i : ${#numbers.sequence((products.getNumber() + 1 > 2 ? products.getNumber() - 1 : 1), (products.getNumber() + 3 < products.getTotalPages() ? products.getNumber() + 3 : products.getTotalPages()) )}">
                 <a class="page-link" th:text="${i}" th:href="@{'/products/?p=' + ${i} + ${filterDef}}"></a>
             </li>
-            <li class="page-item"
-                th:classappend="${products.getNumber() + 1 == products.getTotalPages() ? 'active' : ''}">
-                <a class="page-link" th:text="${products.getTotalPages()}"
-                   th:href="@{'/products/?p=' + ${products.getTotalPages()} + ${filterDef}}"></a>
-            </li>
-            <li class="page-item"
-                th:classappend="${products.isLast() ? 'inac' : ''}">
+
+            <li class="page-item" th:classappend="${products.isLast() ? 'disabled' : ''}">
                 <a class="page-link"
                    th:href="@{'/products/?p='+ ${products.nextOrLastPageable().getPageNumber() + 1} + ${filterDef}}">Вперед</a>
             </li>
@@ -100,4 +105,36 @@
     </nav>
 </div>
 </body>
+
+<script>
+    var app = angular.module('myREST', []);
+    app.controller('myRESTCtrl', function ($scope, $http) {
+        fillTable = function () {
+            $http.get("http://localhost:8189/market/api/v1/products")
+                .then(function (response) {
+                    $scope.Products = response.data;
+                });
+        };
+        fillTable();
+        $scope.addProductToCart = function (product) {
+            $http.post("http://localhost:8189/market/api/v1/cart/", product)
+        };
+    });
+</script>
+<!--<script>-->
+<!--    app.controller('demoCtrl', function ($scope, $http) {-->
+
+<!--        ololo = function () {-->
+<!--        $http.get("http://localhost:8189/market/ol")-->
+<!--    }    });-->
+
+<!--</script>-->
+<!--<script>-->
+<!--    var app = angular.module('demoApp', []);-->
+<!--    app.controller('demoCtrl', function ($scope, $http) {-->
+<!--        addProductToCart = function () {-->
+<!--            $http.post("http://localhost:8189/market/ol")-->
+<!--        };-->
+<!--    });-->
+<!--// </script>-->
 </html>

@@ -1,12 +1,10 @@
 package com.geekbrains.july.market.services;
 
-import com.geekbrains.july.market.entities.Product;
 import com.geekbrains.july.market.entities.Role;
 import com.geekbrains.july.market.entities.User;
 import com.geekbrains.july.market.repositories.RoleRepository;
 import com.geekbrains.july.market.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

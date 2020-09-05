@@ -1,6 +1,5 @@
 package com.geekbrains.july.market.controllers;
 
-import com.geekbrains.july.market.beans.Cart;
 import com.geekbrains.july.market.entities.Category;
 import com.geekbrains.july.market.entities.Product;
 import com.geekbrains.july.market.services.CategoriesService;
@@ -20,18 +19,17 @@ import java.util.Map;
 public class ProductsController {
     private ProductsService productsService;
     private CategoriesService categoriesService;
-    private Cart cart;
 
     @Autowired
-    public ProductsController(ProductsService productsService, CategoriesService categoriesService, Cart cart) {
+    public ProductsController(ProductsService productsService, CategoriesService categoriesService) {
         this.productsService = productsService;
         this.categoriesService = categoriesService;
-        this.cart = cart;
     }
 
     @GetMapping
     public String showAll(Model model, @RequestParam Map<String, String> requestParams, @RequestParam(name = "categories", required = false) List<Long> categoriesIds) {
         Integer pageNumber = Integer.parseInt(requestParams.getOrDefault("p", "1"));
+
         List<Category> categoriesFilter = null;
         if (categoriesIds != null) {
             categoriesFilter = categoriesService.getCategoriesByIds(categoriesIds);
@@ -64,13 +62,5 @@ public class ProductsController {
     public String modifyProduct(@ModelAttribute Product product) {
         productsService.saveOrUpdate(product);
         return "redirect:/products/";
-    }
-
-    @PostMapping("/buy/{id}")
-    public String buyProduct(Model model, @PathVariable Long id, @RequestParam Map<String, String> requestParams,
-                             @RequestParam(defaultValue = "1") Integer quantity,
-                             @RequestParam(name = "categories", required = false) List<Long> categoriesIds) {
-            cart.addProductToCart(productsService.findById(id), quantity);
-        return showAll(model, requestParams, categoriesIds);
     }
 }

@@ -16,16 +16,21 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
+                <li class="nav-item" th:classappend="${activeTab == 'Home' ? 'active' : ''}">
+                    <a class="nav-link" th:href="@{'/'}" th:text="#{nav.home}"></a>
+                </li>
                 <li class="nav-item" th:classappend="${activeTab == 'Market' ? 'active' : ''}">
                     <a class="nav-link" th:href="@{'/products'}" th:text="#{nav.products}"></a>
-                </li>
-                <li class="nav-item" th:classappend="${activeTab == 'About' ? 'active' : ''}">
-                    <a class="nav-link" th:href="@{'/about'}" th:text="#{nav.about}"></a>
                 </li>
                 <li class="nav-item" th:classappend="${activeTab == 'Cart' ? 'active' : ''}">
                     <a class="nav-link" th:href="@{'/cart'}" th:text="#{nav.cart}"></a>
                 </li>
-
+                <li class="nav-item" th:classappend="${activeTab == 'About' ? 'active' : ''}">
+                    <a class="nav-link" th:href="@{'/about'}" th:text="#{nav.about}"></a>
+                </li>
+                <li class="nav-item" th:classappend="${activeTab == 'AddProduct' ? 'active' : ''}">
+                    <a class="nav-link" th:href="@{'/products/add'}" th:text="#{nav.add}"></a>
+                </li>
                 <li sec:authorize="isAuthenticated()" class="nav-item">
                     <form th:action="@{/logout}" method="POST">
                         <button id="navLogout" class="btn btn-outline-secondary" type="submit"  th:text="#{nav.logout}"></button>
@@ -43,17 +48,15 @@
                         </div>
                     </form>
                 </li>
-                <li class="nav-item" sec:authorize="isAuthenticated()" th:classappend="${activeTab == 'profile' ? 'active' : ''}">
-                    <a class="nav-link" th:href="@{'/profile'}" th:text="#{nav.profile}"></a>
+                <li sec:authorize="isAnonymous()" class="nav-item">
+                    <a class="btn btn-outline-warning" th:href="@{/register}" th:text="'Регистрация'" />
                 </li>
-                <div class="dropdown" style="...">
-                    <button class="btn btn-outline-setcondary dropdown-toggle" th:text="#{nav.lang}" type="button"
-                            id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>
+
+                <div class="dropdown" style="margin-left: 10px;">
+                    <button class="btn btn-outline-settcondary dropdown-toggle" th:text="#{nav.lang}" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item"
-                           th:href="@{?lang=ru}">РУС</a>
-                        <a class="dropdown-item"
-                           th:href="@{?lang=en}">ENG</a>
+                        <a class="dropdown-item" th:href="@{'/?lang=ru'}">РУС</a>
+                        <a class="dropdown-item" th:href="@{'/?lang=en'}">ENG</a>
                     </div>
                 </div>
             </ul>
