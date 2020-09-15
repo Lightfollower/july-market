@@ -1,26 +1,20 @@
 package com.geekbrains.july.market.entities.dtos;
 
-import lombok.Data;
-import lombok.Getter;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlType;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "product", propOrder = {
-        "id",
-        "title",
-        "price",
-})
-@Data
-public class ProductDto {
-    @XmlElement(required = true)
-    Long id;
-    @XmlElement(required = true)
-    String title;
-    @XmlElement(required = true)
-    BigDecimal price;
+@ApiModel(description = "Product dto in the application.")
+public interface ProductDto {
+    @ApiModelProperty(notes = "Unique identifier of the product. No two products can have the same id.", example = "1", required = true, position = 0)
+    Long getId();
+
+    @ApiModelProperty(notes = "Title of the product.", example = "Milk", required = true, position = 1)
+    @Size(min = 4, max = 255)
+    String getTitle();
+
+    @ApiModelProperty(notes = "Price of the product.", example = "200.00", required = true, position = 2)
+    BigDecimal getPrice();
 }

@@ -3,7 +3,7 @@ package com.geekbrains.july.market.controllers;
 import com.geekbrains.july.market.beans.Cart;
 import com.geekbrains.july.market.entities.Order;
 import com.geekbrains.july.market.entities.User;
-import com.geekbrains.july.market.services.OrdersService;
+import com.geekbrains.july.market.services.OrderService;
 import com.geekbrains.july.market.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,7 +17,7 @@ import java.security.Principal;
 @AllArgsConstructor
 public class OrdersController {
     private UserService userService;
-    private OrdersService ordersService;
+    private OrderService orderService;
     private Cart cart;
 
     @GetMapping("/create")
@@ -32,7 +32,7 @@ public class OrdersController {
     public String confirmOrder(Principal principal, @RequestParam String address, @RequestParam String phone) {
         User user = userService.findByPhone(principal.getName()).get();
         Order order = new Order(user, cart, phone, address);
-        order = ordersService.saveOrder(order);
+        order = orderService.saveOrder(order);
         return order.getId() + " " + order.getPrice();
     }
 }

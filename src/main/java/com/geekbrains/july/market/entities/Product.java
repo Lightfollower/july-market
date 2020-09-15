@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class Product {
     private Long id;
 
     @Column(name = "title")
+    @Size(min = 4, max = 255)
     private String title;
 
     @Column(name = "price")
