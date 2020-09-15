@@ -54,8 +54,8 @@ public class ProductService {
         return productRepository.existsById(id);
     }
 
-    public List<ProductDto> getDtoData() {
-       return productRepository.findAllBy();
+    public Page<ProductDto> getDtoData(int pageNum) {
+       return productRepository.findAllBy(PageRequest.of(pageNum , 5));
     }
 
     public ProductSOAPDto findOneProductSOAPByTitle(String title) {

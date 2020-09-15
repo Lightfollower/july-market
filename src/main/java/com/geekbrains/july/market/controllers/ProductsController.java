@@ -22,8 +22,8 @@ public class ProductsController {
 
     @GetMapping(produces = "application/json")
     @ApiOperation("Returns list of all products")
-    public List<ProductDto> getAllProducts() {
-        return productService.getDtoData();
+    public List<ProductDto> getAllProducts(@RequestParam(name = "p") int pageNum) {
+        return productService.getDtoData(pageNum).getContent();
     }
 
     @GetMapping(value = "/{id}", produces = "application/json")
