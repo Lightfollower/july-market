@@ -90,4 +90,8 @@ public class UserService implements UserDetailsService {
     public void deleteById(int id) {
         userRepository.deleteById((long)id);
     }
+
+    public Optional<User> findByFirstName(String firstName) {
+        return userRepository.findByFirstName(firstName);
+    }
 }

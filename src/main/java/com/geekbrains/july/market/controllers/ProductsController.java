@@ -22,7 +22,7 @@ public class ProductsController {
 
     @GetMapping(produces = "application/json")
     @ApiOperation("Returns list of all products")
-    public List<ProductDto> getAllProducts(@RequestParam(name = "p") int pageNum) {
+    public List<ProductDto> getAllProducts(@RequestParam(name = "p", defaultValue = "0") int pageNum) {
         return productService.getDtoData(pageNum).getContent();
     }
 
