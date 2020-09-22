@@ -66,13 +66,11 @@ public class CartTest {
         }
         long id = 1;
         cart.removeByProductId(id);
-        Product product = null;
         for (OrderItem orderItem :
                 cart.getItems()) {
             if (orderItem.getProduct().getId() == id)
-                product = orderItem.getProduct();
+                Assertions.fail();
         }
-        Assertions.assertEquals(null, product);
     }
 
     @Test
