@@ -22,11 +22,4 @@ public class AdminController {
         model.addAttribute("users", userService.findAll());
         return "adminka";
     }
-
-    @GetMapping("/delete/{id}")
-    public String ololo(@PathVariable int id){
-        userService.deleteById(id);
-        System.out.println(id);
-        return "redirect:/adminka";
-    }
 }

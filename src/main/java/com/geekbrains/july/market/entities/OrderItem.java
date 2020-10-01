@@ -1,6 +1,8 @@
 package com.geekbrains.july.market.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -8,6 +10,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "orders_items")
 @Data
+@NoArgsConstructor
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +29,7 @@ public class OrderItem {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
+    @JsonBackReference
     private Order order;
 
     public OrderItem(Product product) {

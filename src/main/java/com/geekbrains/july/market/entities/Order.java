@@ -2,6 +2,7 @@ package com.geekbrains.july.market.entities;
 
 import com.geekbrains.july.market.beans.Cart;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @Data
+@NoArgsConstructor
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
