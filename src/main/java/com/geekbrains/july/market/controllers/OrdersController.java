@@ -28,7 +28,9 @@ public class OrdersController {
     private Cart cart;
 
     @GetMapping()
+    @ResponseStatus(HttpStatus.OK)
     @ApiOperation("Returns current order")
+    @ResponseBody
     public ResponseEntity<?> getOrder(Principal principal){
         OrderDto orderDto = orderService.getOrderByUserPhone(principal.getName()).get();
         return new ResponseEntity<>(orderDto, HttpStatus.OK);
