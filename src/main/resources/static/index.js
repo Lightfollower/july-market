@@ -23,11 +23,19 @@
             .when('/cart', {
                 templateUrl: 'cart/cart.html',
                 controller: 'cartController'
+            })
+            .when('/create_order', {
+                templateUrl: 'create_order/create_order.html',
+                controller: 'createOrderController'
+            })
+            .when('/create_order_result', {
+                templateUrl: 'create_order_result/create_order_result.html'
             });
 
         $httpProvider.interceptors.push(function ($q, $location) {
             return {
                 'responseError': function (rejection, $localStorage, $http) {
+                    console.log('intercepted');
                     var defer = $q.defer();
                     if (rejection.status == 401 || rejection.status == 403) {
                         console.log('error: 401-403');

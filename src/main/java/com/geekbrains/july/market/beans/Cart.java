@@ -20,7 +20,6 @@ import java.util.List;
 public class Cart {
     private List<OrderItem> items;
     private BigDecimal price;
-    private Long itemId = 1L;
 
     @PostConstruct
     public void init() {
@@ -40,10 +39,7 @@ public class Cart {
                 return;
             }
         }
-        OrderItem orderItem = new OrderItem(product);
-        items.add(orderItem);
-        orderItem.setId(itemId++);
-        System.out.println(orderItem);
+        items.add(new OrderItem(product));
         recalculate();
     }
 
@@ -73,7 +69,7 @@ public class Cart {
     public void recalculate() {
         price = new BigDecimal(0.0);
         for (OrderItem i : items) {
-            price = price.add(i.getPrice());
+            price = price.add(i.getPrice().multiply(BigDecimal.valueOf(i.getQuantity())));
         }
     }
 }
