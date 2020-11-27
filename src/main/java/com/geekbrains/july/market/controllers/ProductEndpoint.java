@@ -1,9 +1,9 @@
 package com.geekbrains.july.market.controllers;
 
-import com.geekbrains.july.market.products.GetProductRequest;
-import com.geekbrains.july.market.products.GetProductResponse;
-import com.geekbrains.july.market.products.ProductSOAP;
-import com.geekbrains.july.market.services.ProductsService;
+import com.geekbrains.july.market.productsSOAPServiceFiles.GetProductRequest;
+import com.geekbrains.july.market.productsSOAPServiceFiles.GetProductResponse;
+import com.geekbrains.july.market.entities.dtos.ProductSOAPDto;
+import com.geekbrains.july.market.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -17,19 +17,19 @@ import java.util.List;
 public class ProductEndpoint {
     private static final String NAMESPACE_URI = "http://www.geekbrains.com/spring/ws/products";
 
-    private ProductsService productsService;
+    private ProductService productService;
 
     @Autowired
-    public ProductEndpoint(ProductsService productsService) {
-        this.productsService = productsService;
+    public ProductEndpoint(ProductService productService) {
+        this.productService = productService;
     }
 
     @PayloadRoot(namespace = NAMESPACE_URI, localPart = "getProductRequest")
     @ResponsePayload
     public GetProductResponse getProduct(@RequestPayload GetProductRequest request) {
         GetProductResponse response = new GetProductResponse();
-        List<ProductSOAP> products = new ArrayList<>();
-        response.setProduct(productsService.getDtoData());
+        List<ProductSOAPDto> products = new ArrayList<>();
+        response.setProduct(productService.findAllSOAP());
         return response;
     }
 }

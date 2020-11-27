@@ -2,6 +2,7 @@ package com.geekbrains.july.market.configs;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@Slf4j
 public class JwtRequestFilter extends OncePerRequestFilter {
     private UserDetailsService userDetailsService;
     private JwtTokenUtil jwtTokenUtil;
@@ -35,21 +37,18 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
+
         String username = null;
         String jwt = null;
         if (authHeader != null && authHeader.startsWith("Bearer ")) {
             jwt = authHeader.substring(7);
-            // Здесь происходит валидация токена и будет брошено MalformedJwtException
             try {
                 username = jwtTokenUtil.getUsernameFromToken(jwt);
-                System.out.println(username);
-                System.out.println(username);
-                System.out.println(username);
-                System.out.println(username);
-                System.out.println(username);
             } catch (ExpiredJwtException e) {
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "{ msg: The token is expired }");
-                return;
+                log.debug("The token is expired");
+//                String error = JsonUtils.convertObjectToJson(new BookServiceError(HttpStatus.UNAUTHORIZED.value(), "Jwt is expired"));
+//                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, error);
+//                return;
             }
         }
 

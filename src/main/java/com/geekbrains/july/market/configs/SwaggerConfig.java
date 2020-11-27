@@ -1,8 +1,6 @@
 package com.geekbrains.july.market.configs;
 
-import com.geekbrains.july.market.controllers.RestProductsController;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;

@@ -16,7 +16,7 @@ import java.util.List;
 
 @Component
 @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
-@Getter
+@Data
 public class Cart {
     private List<OrderItem> items;
     private BigDecimal price;

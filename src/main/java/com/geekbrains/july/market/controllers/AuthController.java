@@ -31,10 +31,6 @@ public class AuthController {
 
     @PostMapping("/auth")
     public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest) throws Exception {
-        System.out.println("ololo");
-        System.out.println("ololo");
-        System.out.println("ololo");
-        System.out.println("ololo");
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
         } catch (BadCredentialsException ex) {
