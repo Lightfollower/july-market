@@ -11,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,11 +24,14 @@ import java.util.Map;
 @CrossOrigin("*")
 @RequestMapping("/api/v1/products")
 @Api("Set of endpoints for CRUD operations for Products")
-@AllArgsConstructor
 public class RestProductsController {
     private ProductsService productsService;
     private CategoriesService categoriesService;
 
+    @Autowired
+    public RestProductsController(ProductsService productsService) {
+        this.productsService = productsService;
+    }
 
     @GetMapping("/dto")
     @ApiOperation("Returns list of all products data transfer objects")

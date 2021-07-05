@@ -24,4 +24,18 @@ public class CartController {
     public String showCartPage(Model model) {
         return "cart";
     }
+
+    @GetMapping("/decrement/{productId}")
+    public void decrementProductToCartById(@PathVariable Long productId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        cart.decrement(productsService.findById(productId));
+        response.sendRedirect(request.getHeader("referer"));
+    }
+
+    @GetMapping("/remove/{productId}")
+    public void removeProductFromCartById(@PathVariable Long productId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        cart.removeByProductId(productId);
+        response.sendRedirect(request.getHeader("referer"));
+    }
+
+
 }

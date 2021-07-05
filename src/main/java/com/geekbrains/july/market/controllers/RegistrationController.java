@@ -2,7 +2,7 @@ package com.geekbrains.july.market.controllers;
 
 import com.geekbrains.july.market.entities.User;
 import com.geekbrains.july.market.entities.dtos.SystemUser;
-import com.geekbrains.july.market.services.UsersService;
+import com.geekbrains.july.market.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -15,16 +15,15 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
 public class RegistrationController {
-    private UsersService usersService;
+    private UserService userService;
 
     @Autowired
-    public void setUserService(UsersService usersService) {
-        this.usersService = usersService;
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     @InitBinder
@@ -44,14 +43,14 @@ public class RegistrationController {
         if (bindingResult.hasErrors()) {
             return "registration-form";
         }
-        Optional<User> existing = usersService.findByPhone(systemUser.getPhone());
+        Optional<User> existing = userService.findByPhone(systemUser.getPhone());
         if (existing.isPresent()) {
             model.addAttribute("registrationError", "User with phone number: [" + systemUser.getPhone() + "] is already exist");
             systemUser.setPhone(null);
             model.addAttribute("systemUser", systemUser);
             return "registration-form";
         }
-        usersService.save(systemUser);
+        userService.save(systemUser);
         return "registration-confirmation";
     }
 }

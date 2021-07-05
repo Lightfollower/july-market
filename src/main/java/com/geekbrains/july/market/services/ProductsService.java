@@ -3,6 +3,7 @@ package com.geekbrains.july.market.services;
 import com.geekbrains.july.market.entities.Product;
 import com.geekbrains.july.market.entities.dtos.ProductDto;
 import com.geekbrains.july.market.exceptions.ProductNotFoundException;
+import com.geekbrains.july.market.products.ProductSOAP;
 import com.geekbrains.july.market.repositories.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -53,6 +55,40 @@ public class ProductsService {
     }
 
     public List<ProductDto> getDtoData() {
-        return productsRepository.findAllBy();
+        List<Product> products = productsRepository.findAll();
+        List<ProductDto> productDtos = new ArrayList<>();
+        for (Product p :
+                products) {
+            ProductDto productDto = new ProductDto();
+            productDto.setId(p.getId());
+            productDto.setTitle(p.getTitle());
+            productDto.setPrice(p.getPrice());
+            productDtos.add(productDto);
+        }
+        return productDtos;
+    }
+
+    public ProductSOAP findOneProductSOAPByTitle(String title) {
+        Product product = productsRepository.findByTitle(title);
+        ProductSOAP productSOAP = new ProductSOAP();
+        productSOAP.setId(product.getId());
+        productSOAP.setTitle(product.getTitle());
+        productSOAP.setPrice(product.getPrice());
+        return productSOAP;
+    }
+
+    public List<ProductSOAP> findAllSOAP() {
+        List<Product> products = productsRepository.findAll();
+        List<ProductSOAP> productSOAPS = new ArrayList<>();
+        ProductSOAP productSOAP;
+        for (Product p :
+                products) {
+            productSOAP = new ProductSOAP();
+            productSOAP.setId(p.getId());
+            productSOAP.setTitle(p.getTitle());
+            productSOAP.setPrice(p.getPrice());
+            productSOAPS.add(productSOAP);
+        }
+        return productSOAPS;
     }
 }

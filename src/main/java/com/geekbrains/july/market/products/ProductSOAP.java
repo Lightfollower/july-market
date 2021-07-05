@@ -1,8 +1,7 @@
-package com.geekbrains.july.market.entities.dtos;
+package com.geekbrains.july.market.products;
 
 import lombok.Data;
-import lombok.Getter;
-
+import lombok.NoArgsConstructor;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -15,12 +14,15 @@ import java.math.BigDecimal;
         "title",
         "price",
 })
+@NoArgsConstructor
 @Data
-public class ProductDto {
+public class ProductSOAP {
     @XmlElement(required = true)
-    Long id;
+    private Long id;
+
     @XmlElement(required = true)
-    String title;
+    private String title;
+
     @XmlElement(required = true)
-    BigDecimal price;
+    private BigDecimal price;
 }
